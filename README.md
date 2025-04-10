@@ -23,5 +23,5 @@ Built to leverage Rust’s performance and Python’s data science ecosystem.
 ### 1. Clone and enter the project
 
 ```bash
-git clone https://github.com/your-username/DeepFraud.git
+git clone https://github.com/ash2228/DeepFraud.git
 cd DeepFraud
