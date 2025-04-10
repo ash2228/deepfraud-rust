@@ -1,0 +1,48 @@
+
+---
+
+### ✅ `.gitignore`
+
+```gitignore
+creditcard.csv
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# Rust build
+/target/
+/Cargo.lock
+
+# VSCode and IDEs
+.vscode/
+.idea/
+
+# Wheels and build artifacts
+*.so
+*.dylib
+*.dll
+*.whl
+build/
+*.egg-info/
+.eggs/
+
+# Python logs
+*.log
+*.out
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS stuff
+.DS_Store
+Thumbs.db
+
+# Data
+*.csv
+*.zip
