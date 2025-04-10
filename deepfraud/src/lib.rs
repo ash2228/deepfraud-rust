@@ -1,7 +1,6 @@
 use pyo3::prelude::*;
 use rand::{Rng, SeedableRng};
 use rand_chacha::ChaCha20Rng;
-use std::time::Instant;
 
 static LEARNING_RATE: f32 = 0.4;
 static SEED: u64 = 123;
@@ -154,21 +153,6 @@ impl NeuralNetwork {
             }
         }
     }
-}
-
-fn main() {
-    let start = Instant::now();
-    let x = vec![
-        vec![0.0, 0.0],
-        vec![0.0, 1.0],
-        vec![1.0, 0.0],
-        vec![1.0, 1.0],
-    ];
-    let y = vec![1.0, 0.0, 0.0, 1.0];
-    let mut neural_network = NeuralNetwork::new(x, y, vec![4, 8]);
-    neural_network.train(20000);
-    let duration = start.elapsed();
-    println!("Time elapsed: {:?}", duration);
 }
 
 #[pymodule]
