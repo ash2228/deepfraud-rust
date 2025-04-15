@@ -1,6 +1,9 @@
 use pyo3::prelude::*;
 use rand::{Rng, SeedableRng};
 use rand_chacha::ChaCha20Rng;
+use serde::{Deserialize, Serialize};
+use std::fs::File;
+use std::io::Write;
 
 static LEARNING_RATE: f32 = 0.4;
 static SEED: u64 = 123;
@@ -9,6 +12,7 @@ fn sigmoid_activation(x: f32) -> f32 {
     1.0 / (1.0 + (-x).exp())
 }
 
+#[derive(Serialize, Clone, Deserialize)]
 struct Neuron {
     weight: Vec<f32>,
     bias: f32,
@@ -151,6 +155,33 @@ impl NeuralNetwork {
                     grad = layer.backward_pass(grad.clone());
                 }
             }
+        }
+    }
+
+    pub fn write_to_json(&mut self, file_name: String) -> std::io::Result<()> {
+        let mut data: Vec<Vec<Neuron>> = vec![];
+        for neuron in self.neural_layer.iter_mut() {
+            data.push(neuron.neurons.clone());
+        }
+        let json_string = serde_json::to_string_pretty(&data).unwrap();
+        let mut file = File::create(format!("{}.json", file_name))?;
+        file.write_all(json_string.as_bytes())?;
+
+        Ok(())
+    }
+
+    pub fn load_config(&mut self, file_name: String) {
+        // Read JSON file
+        let file_path = format!("{}.json", file_name);
+        let file_content = std::fs::read_to_string(file_path).expect("Failed to read config file");
+
+        // Deserialize JSON to Vec<Vec<Neuron>>
+        let config: Vec<Vec<Neuron>> =
+            serde_json::from_str(&file_content).expect("Failed to parse config JSON");
+
+        // Assign deserialized neurons to layers
+        for (layer, new_neurons) in self.neural_layer.iter_mut().zip(config.into_iter()) {
+            layer.neurons = new_neurons;
         }
     }
 }
