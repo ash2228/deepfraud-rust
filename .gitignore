@@ -4,7 +4,6 @@
 ### ✅ `.gitignore`
 
 ```gitignore
-creditcard.csv
 # Byte-compiled / cache
 __pycache__/
 *.py[cod]
